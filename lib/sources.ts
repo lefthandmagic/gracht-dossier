@@ -11,24 +11,24 @@ export const SOURCES = {
     url: "https://api.pdok.nl/kadaster/bag/ogc/v2",
   },
   foundation: {
-    name: "Gemeente Amsterdam — Funderingen",
-    url: "https://www.amsterdam.nl/",
+    name: "RVO / PDOK — Indicatieve funderingsaandachtsgebieden",
+    url: "https://api.pdok.nl/rvo/indicatieve-aandachtsgebieden-funderingsproblematiek/ogc/v1/",
   },
   heritage: {
-    name: "Cultureel erfgoed — Monumentenregister",
-    url: "https://monumentenregister.cultureelerfgoed.nl/",
+    name: "Gemeente Amsterdam — Monumenten",
+    url: "https://api.data.amsterdam.nl/v1/monumenten/monumenten",
   },
   zoning: {
-    name: "DSO / bestemmingsplan (Amsterdam)",
-    url: "https://www.amsterdam.nl/bestuur-organisatie/organisatie/ruimte-economie/ruimte-duurzaamheid/",
+    name: "Ruimtelijke plannen (Omgevingswet)",
+    url: "https://ruimte.omgevingswet.overheid.nl/ruimtelijke-plannen/api/opvragen/v4/",
   },
   energy: {
-    name: "EP-Online (RVO)",
-    url: "https://www.ep-online.nl/",
+    name: "Gemeente Amsterdam — Duurzaamheid energielabel",
+    url: "https://api.data.amsterdam.nl/v1/duurzaamheid/energielabel",
   },
   cbs: {
-    name: "CBS StatLine",
-    url: "https://opendata.cbs.nl/",
+    name: "CBS / PDOK — Wijken en buurten 2022",
+    url: "https://api.pdok.nl/cbs/wijken-en-buurten-2022/ogc/v1/",
   },
 } as const;
 

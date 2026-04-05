@@ -15,11 +15,16 @@ export interface BagRegisterPayload {
   pandStatus: string | null;
   documentdatum: string | null;
   rdfSeeAlsoVbo: string | null;
+  coordinates: { lon: number; lat: number } | null;
 }
 
 interface FeatureCollection {
   features?: Array<{
     properties?: Record<string, unknown>;
+    geometry?: {
+      type?: string;
+      coordinates?: unknown;
+    };
   }>;
 }
 
@@ -74,6 +79,12 @@ export async function fetchBagRegister(
   const feature = vboJson.features?.[0];
   const props = feature?.properties;
   if (!props) return null;
+  const coords =
+    feature?.geometry?.type === "Point" && Array.isArray(feature.geometry.coordinates)
+      ? feature.geometry.coordinates
+      : null;
+  const lon = typeof coords?.[0] === "number" ? coords[0] : null;
+  const lat = typeof coords?.[1] === "number" ? coords[1] : null;
 
   const pandHrefs = pickHrefArray(props, "pand.href");
   let pandBouwjaar: number | null = null;
@@ -114,5 +125,6 @@ export async function fetchBagRegister(
     pandStatus,
     documentdatum: pickString(props, "documentdatum"),
     rdfSeeAlsoVbo: pickString(props, "rdf_seealso"),
+    coordinates: lon != null && lat != null ? { lon, lat } : null,
   };
 }

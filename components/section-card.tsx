@@ -69,9 +69,7 @@ export function SectionCard({
 
           {envelope.status === "empty" ? (
             <div className="mt-3 text-sm text-zinc-600 dark:text-zinc-400">
-              No row from this register for this object, or this integration is
-              not connected yet (still pending: foundation, heritage, zoning,
-              energy, CBS).
+              No row from this register for this object.
             </div>
           ) : null}
 

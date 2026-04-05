@@ -1,9 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { BagRegisterDetails } from "@/components/bag-register-details";
+import { SectionDataRenderer } from "@/components/section-data-renderer";
 import { SectionCard } from "@/components/section-card";
-import type { BagRegisterPayload } from "@/lib/bag-ogc";
 import type { SectionEnvelope } from "@/lib/types";
 
 type SectionKey =
@@ -110,10 +109,8 @@ export function PropertySections({
             envelope={envelope}
             onRetry={onRetryAll}
           >
-            {envelope?.status === "loaded" &&
-            envelope.data != null &&
-            s.key === "bag" ? (
-              <BagRegisterDetails data={envelope.data as BagRegisterPayload} />
+            {envelope?.status === "loaded" && envelope.data != null ? (
+              <SectionDataRenderer sectionKey={s.key} data={envelope.data} />
             ) : null}
           </SectionCard>
         );
