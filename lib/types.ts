@@ -93,3 +93,20 @@ export interface AreaSectionData {
   bevolkingsdichtheid: number | null;
   gemiddeldInkomenPerInwoner: number | null;
 }
+
+export interface ValuationSectionData {
+  modelVersion: string;
+  estimateEur: {
+    low: number;
+    mid: number;
+    high: number;
+  };
+  confidence: "low" | "medium" | "high";
+  valuePerM2: number | null;
+  floorAreaM2: number | null;
+  wozValueEur: number | null;
+  wozReferenceDate: string | null;
+  municipality: string | null;
+  drivers: string[];
+  caveats: string[];
+}

@@ -205,7 +205,13 @@ export function MemoView() {
             <a href={SOURCES.energy.url}>{SOURCES.energy.name}</a>
           </li>
           <li>
+            <a href={SOURCES.wozApi.url}>{SOURCES.wozApi.name}</a>
+          </li>
+          <li>
             <a href={SOURCES.cbs.url}>{SOURCES.cbs.name}</a>
+          </li>
+          <li>
+            <a href={SOURCES.valuation.url}>{SOURCES.valuation.name}</a>
           </li>
         </ul>
       </section>

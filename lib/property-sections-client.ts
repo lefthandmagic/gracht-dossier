@@ -6,7 +6,8 @@ export type PropertySectionKey =
   | "heritage"
   | "zoning"
   | "energy"
-  | "area";
+  | "area"
+  | "valuation";
 
 export const PROPERTY_SECTIONS: Array<{ key: PropertySectionKey; title: string }> = [
   { key: "bag", title: "Building (BAG)" },
@@ -15,6 +16,7 @@ export const PROPERTY_SECTIONS: Array<{ key: PropertySectionKey; title: string }
   { key: "zoning", title: "Zoning" },
   { key: "energy", title: "Energy" },
   { key: "area", title: "Area (CBS)" },
+  { key: "valuation", title: "Value estimate (free beta)" },
 ];
 
 export async function fetchPropertySection(

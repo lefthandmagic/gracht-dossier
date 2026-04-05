@@ -6,6 +6,7 @@ import type {
   EnergySectionData,
   FoundationSectionData,
   HeritageSectionData,
+  ValuationSectionData,
   ZoningSectionData,
 } from "@/lib/types";
 import { BagRegisterDetails } from "@/components/bag-register-details";
@@ -25,7 +26,14 @@ export function SectionDataRenderer({
   sectionKey,
   data,
 }: {
-  sectionKey: "bag" | "foundation" | "heritage" | "zoning" | "energy" | "area";
+  sectionKey:
+    | "bag"
+    | "foundation"
+    | "heritage"
+    | "zoning"
+    | "energy"
+    | "area"
+    | "valuation";
   data: unknown;
 }) {
   if (sectionKey === "bag") {
@@ -102,19 +110,48 @@ export function SectionDataRenderer({
   }
 
   const d = data as AreaSectionData;
+  if (sectionKey === "area") {
+    return (
+      <dl className="space-y-2">
+        {kv("Neighborhood", d.buurtnaam)}
+        {kv("Municipality", d.gemeentenaam)}
+        {kv("Residents", d.inwoners)}
+        {kv("Households", d.huishoudens)}
+        {kv(
+          "Density",
+          d.bevolkingsdichtheid != null
+            ? `${d.bevolkingsdichtheid}/km²`
+            : null,
+        )}
+        {kv("Avg income / resident", d.gemiddeldInkomenPerInwoner)}
+      </dl>
+    );
+  }
+
+  const v = data as ValuationSectionData;
   return (
-    <dl className="space-y-2">
-      {kv("Neighborhood", d.buurtnaam)}
-      {kv("Municipality", d.gemeentenaam)}
-      {kv("Residents", d.inwoners)}
-      {kv("Households", d.huishoudens)}
-      {kv(
-        "Density",
-        d.bevolkingsdichtheid != null
-          ? `${d.bevolkingsdichtheid}/km²`
-          : null,
-      )}
-      {kv("Avg income / resident", d.gemiddeldInkomenPerInwoner)}
-    </dl>
+    <div className="space-y-3">
+      <dl className="space-y-2">
+        {kv(
+          "Estimated value",
+          `EUR ${v.estimateEur.low.toLocaleString("en-GB")} - EUR ${v.estimateEur.high.toLocaleString("en-GB")}`,
+        )}
+        {kv("Model midpoint", `EUR ${v.estimateEur.mid.toLocaleString("en-GB")}`)}
+        {kv("Confidence", v.confidence)}
+        {kv(
+          "Estimated EUR/m2",
+          v.valuePerM2 != null ? `EUR ${v.valuePerM2.toLocaleString("en-GB")}` : null,
+        )}
+        {kv("Floor area (BAG)", v.floorAreaM2 != null ? `${v.floorAreaM2} m²` : null)}
+        {kv("WOZ value", v.wozValueEur != null ? `EUR ${v.wozValueEur.toLocaleString("en-GB")}` : null)}
+        {kv("WOZ reference date", v.wozReferenceDate)}
+      </dl>
+      <p className="text-sm">
+        Drivers: {v.drivers.length ? v.drivers.join(" | ") : "—"}
+      </p>
+      <p className="text-sm text-zinc-600 dark:text-zinc-300">
+        Caveats: {v.caveats.length ? v.caveats.join(" | ") : "—"}
+      </p>
+    </div>
   );
 }

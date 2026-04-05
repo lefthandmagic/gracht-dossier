@@ -30,6 +30,14 @@ export const SOURCES = {
     name: "CBS / PDOK — Wijken en buurten 2022",
     url: "https://api.pdok.nl/cbs/wijken-en-buurten-2022/ogc/v1/",
   },
+  valuation: {
+    name: "Gracht Dossier — Free valuation model (BAG + open registers)",
+    url: "https://github.com/lefthandmagic/gracht-dossier",
+  },
+  wozApi: {
+    name: "WozApi (free tier) — WOZ + BAG endpoint",
+    url: "https://woz-api.nl/swagger/index.html",
+  },
 } as const;
 
 export function stubSectionEnvelope(
