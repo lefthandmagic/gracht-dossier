@@ -3,7 +3,8 @@
 **Working title:** Amsterdam canal-home buyer intelligence (internal codename TBD)  
 **Repository root:** `gracht-dossier/` (local folder name; remote repo name can match or differ)  
 **Document status:** v1 scope lock for initial build  
-**Last updated:** 2026-04-05
+**Last updated:** 2026-04-05  
+**Technical architecture:** [ARCHITECTURE.md](ARCHITECTURE.md)
 
 ---
 
