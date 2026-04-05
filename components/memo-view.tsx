@@ -1,0 +1,120 @@
+"use client";
+
+import Link from "next/link";
+import { useParams } from "next/navigation";
+import { useMemo } from "react";
+import { SOURCES } from "@/lib/sources";
+import { getShortlistEntry } from "@/lib/shortlist-storage";
+
+export function MemoView() {
+  const params = useParams();
+  const rawId = params.id;
+  const propertyId = Array.isArray(rawId) ? rawId[0] : rawId;
+
+  const entry = useMemo(() => {
+    if (!propertyId) return null;
+    return getShortlistEntry(propertyId) ?? null;
+  }, [propertyId]);
+
+  if (!propertyId) {
+    return <p className="text-sm text-zinc-600">Missing property id.</p>;
+  }
+
+  if (entry === null) {
+    return (
+      <div className="space-y-4">
+        <p>Property not in shortlist on this device.</p>
+        <Link href="/" className="text-emerald-800 underline dark:text-emerald-400">
+          Back home
+        </Link>
+      </div>
+    );
+  }
+
+  return (
+    <article className="memo-print space-y-8 text-zinc-900 dark:text-zinc-100">
+      <header className="border-b border-zinc-300 pb-6 dark:border-zinc-700">
+        <p className="text-xs uppercase tracking-wide text-zinc-500">
+          Investment memo (draft)
+        </p>
+        <h1 className="mt-2 text-3xl font-semibold">
+          {entry.nickname ? `${entry.nickname} — ` : ""}
+          {entry.addressLabel}
+        </h1>
+        <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
+          Verblijfsobject {entry.id} · Nummeraanduiding{" "}
+          {entry.nummeraanduidingId ?? "—"}
+        </p>
+        <p className="mt-4 rounded-lg bg-amber-50 p-3 text-sm text-amber-950 dark:bg-amber-950/40 dark:text-amber-100">
+          Informational only: not structural, legal, or investment advice.
+          Verify all facts with the original registers.
+        </p>
+      </header>
+
+      <section>
+        <h2 className="text-xl font-semibold">Executive summary</h2>
+        <p className="mt-2 text-sm leading-relaxed text-zinc-700 dark:text-zinc-300">
+          This memo summarizes publicly available register pointers for one
+          Amsterdam address. Register sections (foundation, heritage, zoning,
+          energy, neighborhood context) will appear here as they are wired in the
+          application. Until then, use the property detail view and source links.
+        </p>
+      </section>
+
+      <section>
+        <h2 className="text-xl font-semibold">Address &amp; identifiers</h2>
+        <ul className="mt-2 list-inside list-disc text-sm text-zinc-700 dark:text-zinc-300">
+          <li>Display: {entry.addressLabel}</li>
+          <li>Postcode / number: {entry.postcode} {entry.huisnummer}</li>
+          <li>BAG verblijfsobject: {entry.id}</li>
+          <li>BAG nummeraanduiding: {entry.nummeraanduidingId ?? "—"}</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2 className="text-xl font-semibold">Data provenance</h2>
+        <ul className="mt-2 space-y-1 text-sm text-zinc-700 dark:text-zinc-300">
+          <li>
+            <a href={SOURCES.pdokLocatieserver.url}>{SOURCES.pdokLocatieserver.name}</a>
+          </li>
+          <li>
+            <a href={SOURCES.foundation.url}>{SOURCES.foundation.name}</a>
+          </li>
+          <li>
+            <a href={SOURCES.heritage.url}>{SOURCES.heritage.name}</a>
+          </li>
+          <li>
+            <a href={SOURCES.zoning.url}>{SOURCES.zoning.name}</a>
+          </li>
+          <li>
+            <a href={SOURCES.energy.url}>{SOURCES.energy.name}</a>
+          </li>
+          <li>
+            <a href={SOURCES.cbs.url}>{SOURCES.cbs.name}</a>
+          </li>
+        </ul>
+      </section>
+
+      <footer className="border-t border-zinc-300 pt-6 text-xs text-zinc-500 dark:border-zinc-700">
+        Generated from Gracht Dossier · Local browser shortlist only ·{" "}
+        {new Date().toISOString()}
+      </footer>
+
+      <p className="print:hidden">
+        <button
+          type="button"
+          onClick={() => window.print()}
+          className="rounded-lg bg-zinc-900 px-4 py-2 text-sm font-medium text-white dark:bg-zinc-100 dark:text-zinc-900"
+        >
+          Print or Save as PDF
+        </button>
+        <Link
+          href={`/property/${encodeURIComponent(propertyId)}`}
+          className="ml-3 text-sm text-emerald-800 underline dark:text-emerald-400"
+        >
+          Back to property
+        </Link>
+      </p>
+    </article>
+  );
+}
